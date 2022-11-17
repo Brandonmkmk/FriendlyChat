@@ -86,6 +86,17 @@ function isUserSignedIn() {
 
 // Saves a new message on the Cloud Firestore.
 async function saveMessage(messageText) {
+  try {
+    await addDoc(collection(getFirestore(), 'messages'), {
+      name: getUserName(),
+      text: messageText,
+      profilePicUrl: getProfilePicUrl(),
+      timestamp: serverTimestamp()
+    });
+  }
+  catch(error) {
+    console.error('Error writing new message to Firebase Database', error);
+  }
   // TODO 7: Push a new message to Cloud Firestore.
 }
 
